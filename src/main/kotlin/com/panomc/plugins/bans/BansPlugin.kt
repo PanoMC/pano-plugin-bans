@@ -1,8 +1,8 @@
-package com.panomc.plugins.boilerplate
+package com.panomc.plugins.bans
 
 import com.panomc.platform.api.PanoPlugin
 
-class BoilerplatePlugin : PanoPlugin() {
+class BansPlugin : PanoPlugin() {
     override suspend fun onStart() {
         logger.info("Starting...")
     }
@@ -17,4 +17,3 @@ class BoilerplatePlugin : PanoPlugin() {
         // add some cleanup codes for your data used in plugin before uninstalling
     }
 }
-
