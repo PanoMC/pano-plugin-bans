@@ -3,6 +3,7 @@ package com.panomc.plugins.bans.dao
 import com.panomc.platform.db.DBEntity
 import com.panomc.platform.db.DatabaseManager
 import com.panomc.platform.db.model.User
+import com.panomc.platform.util.BanUtil
 import com.panomc.plugins.bans.BansPlugin
 import io.vertx.kotlin.coroutines.coAwait
 import io.vertx.sqlclient.Row
@@ -21,7 +22,7 @@ class BansDao(private val bansPlugin: BansPlugin) {
         val prefix = databaseManager.getTablePrefix()
         
         val query = if (showHistory) {
-            "SELECT u.username, u.banned, u.lastActivityTime, h.reason as banMessage, h.bannedUntil, h.createdAt as banDate FROM `${prefix}ban_history` h LEFT JOIN `${prefix}user` u ON u.id = h.userId ORDER BY h.createdAt DESC LIMIT ? OFFSET ?"
+            "SELECT u.*, h.reason as banMessage, h.bannedUntil, h.createdAt as banDate FROM `${prefix}ban_history` h LEFT JOIN `${prefix}user` u ON u.id = h.userId ORDER BY h.createdAt DESC LIMIT ? OFFSET ?"
         } else {
             "SELECT u.*, (SELECT createdAt FROM `${prefix}ban_history` WHERE userId = u.id ORDER BY id DESC LIMIT 1) as banDate FROM `${prefix}user` u WHERE u.banned = 1 ORDER BY u.id DESC LIMIT ? OFFSET ?"
         }
@@ -32,7 +33,13 @@ class BansDao(private val bansPlugin: BansPlugin) {
             .execute(Tuple.of(pageSize, offset))
             .coAwait()
 
-        return rows.map { it.toJson().map }
+        return rows.map { row ->
+            val map = row.toJson().map
+            val user = row.toEntity()
+            
+            map["banned"] = BanUtil.isBanned(user)
+            map
+        }
     }
 
     suspend fun getBannedPlayersCount(showHistory: Boolean): Long {

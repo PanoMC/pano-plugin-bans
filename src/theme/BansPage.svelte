@@ -35,7 +35,7 @@
 </script>
 
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { goto, page } from '@panomc/sdk/svelte';
   import { _ } from '../main';
   import { Pagination, Date as PanoDate, PlayerHead } from '@panomc/sdk/components/theme';
@@ -97,7 +97,6 @@
                                     width={config.avatarSize === 'PX_16' ? 16 : config.avatarSize === 'PX_32' ? 32 : 64}
                                     height={config.avatarSize === 'PX_16' ? 16 : config.avatarSize === 'PX_32' ? 32 : 64}
                                     banned={isActiveBan(ban)}
-                                    lastActivityTime={ban.lastActivityTime}
                                     checkTime={checkTime}
                                 />
                             </a>
