@@ -174,8 +174,6 @@
         request: event,
       });
 
-      console.log(res);
-
       return {
         data: {
           bans: res.bans,
