@@ -2,7 +2,7 @@
   <PageTitle>
     <span slot="title">
       {#if config.showTotalBans && pagination.total > 0}
-        {$_('bans.count_title', { count: pagination.total })}
+        {$_('bans.count_title', { values: {count: pagination.total }})}
       {:else}
         {$_('bans.title')}
       {/if}
@@ -158,7 +158,7 @@
 </div>
 
 <script context="module">
-  import ApiUtil, { buildQueryParams } from '@panomc/sdk/utils/api';
+  import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
 
   export async function load(event) {
     const {
