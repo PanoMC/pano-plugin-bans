@@ -7,6 +7,7 @@
   },
   "bans": {
     "title": "Bans",
+    "count_title": "{count} Banned",
     "empty": "No active bans found.",
     "search_placeholder": "Search by username or reason...",
     "no_results": "No results found for your search.",

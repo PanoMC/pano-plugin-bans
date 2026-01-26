@@ -1,41 +1,38 @@
-<div class="container mt-4">
+<div class="container vstack gap-3">
   <PageTitle>
     <span slot="title">
-      {$_('bans.title')}
       {#if config.showTotalBans && pagination.total > 0}
-        <small class="text-muted ms-2 opacity-50">({pagination.total})</small>
+        {$_('bans.count_title', { count: pagination.total })}
+      {:else}
+        {$_('bans.title')}
       {/if}
     </span>
   </PageTitle>
 
   {#if config.showSearch}
-    <div class="row justify-content-center mb-5">
-      <div class="col-md-8 col-lg-6">
-        <div class="position-relative">
-          <div class="position-absolute top-50 start-0 translate-middle-y ms-3 z-3">
-            {#if isSearching}
-              <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-            {:else}
-              <i class="bi bi-search text-muted opacity-75"></i>
-            {/if}
-          </div>
-          <input
-            type="text"
-            class="form-control form-control-lg ps-5 shadow-sm border-0 bg-body"
-            style="border-radius: 12px;"
-            placeholder={$_('bans.search_placeholder')}
-            bind:value={searchInput}
-            on:input={handleSearch} />
+    <div class="d-flex justify-content-center">
+      <div class="position-relative">
+        <div
+          class="position-absolute top-50 start-0 translate-middle-y ms-3 z-3 text-muted"
+          style="pointer-events: none;">
+          {#if isSearching}
+            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+          {:else}
+            <i class="bi bi-search"></i>
+          {/if}
         </div>
+        <input
+          type="text"
+          class="form-control rounded-pill ps-5"
+          style="width: 300px;"
+          placeholder={$_('bans.search_placeholder')}
+          bind:value={searchInput}
+          on:input={handleSearch} />
       </div>
     </div>
   {/if}
-
   {#if bans.length === 0}
-    <NoContent
-      text={searchInput
-        ? $_('bans.no_results')
-        : $_('bans.empty')} />
+    <NoContent text={searchInput ? $_('bans.no_results') : $_('bans.empty')} />
   {:else}
     <div class:row={config.viewLayout === 'GRID'} class:list-group={config.viewLayout === 'LIST'}>
       {#each bans as ban}
@@ -76,8 +73,7 @@
                 <p class="mb-0">
                   {#if config.showDuration && ban.banDate}
                     <i class="bi bi-clock"></i>
-                    {$_('bans.banned_on')}: <PanoDate
-                      time={ban.banDate} /><br />
+                    {$_('bans.banned_on')}: <PanoDate time={ban.banDate} /><br />
                   {/if}
                   {#if config.showExpiry}
                     <i class="bi bi-calendar-x"></i>
@@ -131,8 +127,7 @@
                 {#if config.showDuration && ban.banDate}
                   <span class="me-3">
                     <i class="bi bi-clock"></i>
-                    {$_('bans.banned_on')}: <PanoDate
-                      time={ban.banDate} />
+                    {$_('bans.banned_on')}: <PanoDate time={ban.banDate} />
                   </span>
                 {/if}
                 {#if config.showExpiry}
@@ -152,21 +147,18 @@
         {/if}
       {/each}
     </div>
-
-    <!-- Pagination -->
-    {#if pagination.total > 0}
-      <div class="mt-4">
-        <Pagination
-          page={pagination.current}
-          total={pagination.last}
-          on:change={(e) => loadBans(e.detail)} />
-      </div>
-    {/if}
+  {/if}
+  <!-- Pagination -->
+  {#if pagination.total > 0}
+    <Pagination
+      page={pagination.current}
+      total={pagination.last}
+      on:change={(e) => loadBans(e.detail)} />
   {/if}
 </div>
 
 <script context="module">
-  import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
+  import ApiUtil, { buildQueryParams } from '@panomc/sdk/utils/api';
 
   export async function load(event) {
     const {
@@ -189,7 +181,7 @@
           bans: res.bans,
           config: res.config,
           pagination: res.pagination,
-          search
+          search,
         },
       };
     } catch (e) {
@@ -199,7 +191,7 @@
           bans: [],
           config: {},
           pagination: { current: 1, last: 1, total: 0, perPage: 20 },
-          search: ''
+          search: '',
         },
       };
     }
@@ -210,7 +202,13 @@
   import { onMount } from 'svelte';
   import { goto, page } from '@panomc/sdk/svelte';
   import { _ } from '../main';
-  import { Pagination, Date as PanoDate, PlayerHead, NoContent, PageTitle } from '@panomc/sdk/components/theme';
+  import {
+    Pagination,
+    Date as PanoDate,
+    PlayerHead,
+    NoContent,
+    PageTitle,
+  } from '@panomc/sdk/components/theme';
 
   export let data;
   const { bans, config, pagination, search } = data;
@@ -220,7 +218,7 @@
   let isSearching = false;
 
   $: if (data) {
-      isSearching = false;
+    isSearching = false;
   }
 
   function handleSearch() {
