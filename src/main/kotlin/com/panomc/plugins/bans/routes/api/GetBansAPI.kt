@@ -32,15 +32,17 @@ class GetBansAPI(
     override fun getValidationHandler(schemaRepository: SchemaRepository): ValidationHandler =
         ValidationHandlerBuilder.create(schemaRepository)
             .queryParameter(optionalParam("hash", intSchema()))
+            .queryParameter(optionalParam("search", io.vertx.json.schema.common.dsl.Schemas.stringSchema()))
             .build()
 
     override suspend fun handle(context: RoutingContext): Result {
         val config = configManager.config
         val pageSize = config.paginationSize
         val page = context.request().getParam("page")?.toIntOrNull() ?: 1
+        val search = context.request().getParam("search")
 
-        val bans = bansDao.getBannedPlayers(page, pageSize, config.showHistory)
-        val total = bansDao.getBannedPlayersCount(config.showHistory)
+        val bans = bansDao.getBannedPlayers(page, pageSize, config.showHistory, search)
+        val total = bansDao.getBannedPlayersCount(config.showHistory, search)
         val lastPage = kotlin.math.ceil(total.toDouble() / pageSize).toInt()
 
         return Successful(

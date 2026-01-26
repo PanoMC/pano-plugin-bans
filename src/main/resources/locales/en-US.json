@@ -8,6 +8,8 @@
   "bans": {
     "title": "Bans",
     "empty": "No active bans found.",
+    "search_placeholder": "Search by username or reason...",
+    "no_results": "No results found for your search.",
     "reason": "Reason",
     "banned_by": "Banned by",
     "banned_on": "Banned on",
@@ -21,6 +23,7 @@
       "show_banned_by": "Show Banned By",
       "show_duration": "Show Duration",
       "show_expiry": "Show Expiry Date",
+      "show_search": "Show Search Box",
       "pagination_size": "Items per page",
       "saved": "Settings saved successfully.",
       "failed": "Failed to save settings."

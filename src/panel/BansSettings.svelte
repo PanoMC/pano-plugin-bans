@@ -1,7 +1,7 @@
 {#if addon?.id === 'pano-plugin-bans'}
   <div class="card">
     <div class="card-header">
-      {$_('bans.settings.title', { default: 'Bans Settings' })}
+      {$_('bans.settings.title')}
     </div>
     <div class="card-body animate__animated animate__fadeIn">
       
@@ -9,7 +9,7 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showAvatars">
           <span class="d-block">
-            {$_('bans.settings.show_avatars', { default: 'Show Avatars' })}
+            {$_('bans.settings.show_avatars')}
           </span>
         </label>
         <div class="col-md-6 d-flex align-items-center">
@@ -22,7 +22,7 @@
       {#if config.showAvatars}
       <!-- Avatar Size -->
       <div class="row mb-3">
-         <label class="col-md-6 col-form-label" for="avatarSize">{$_('bans.settings.avatar_size', {default: 'Avatar Size'})}</label>
+         <label class="col-md-6 col-form-label" for="avatarSize">{$_('bans.settings.avatar_size')}</label>
          <div class="col-md-6">
             <select class="form-select" id="avatarSize" bind:value={config.avatarSize}>
                 <option value="PX_16">16px</option>
@@ -37,7 +37,7 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showReason">
           <span class="d-block">
-            {$_('bans.settings.show_reason', { default: 'Show Bans Reason' })}
+            {$_('bans.settings.show_reason')}
           </span>
         </label>
         <div class="col-md-6 d-flex align-items-center">
@@ -51,7 +51,7 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showBannedBy">
           <span class="d-block">
-            {$_('bans.settings.show_banned_by', { default: 'Show Banned By' })}
+            {$_('bans.settings.show_banned_by')}
           </span>
         </label>
         <div class="col-md-6 d-flex align-items-center">
@@ -65,7 +65,7 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showDuration">
           <span class="d-block">
-            {$_('bans.settings.show_duration', { default: 'Show Ban Duration' })}
+            {$_('bans.settings.show_duration')}
           </span>
         </label>
         <div class="col-md-6 d-flex align-items-center">
@@ -79,7 +79,7 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showExpiry">
           <span class="d-block">
-            {$_('bans.settings.show_expiry', { default: 'Show Expiry Date' })}
+            {$_('bans.settings.show_expiry')}
           </span>
         </label>
         <div class="col-md-6 d-flex align-items-center">
@@ -93,10 +93,10 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showHistory">
           <span class="d-block">
-            {$_('bans.settings.show_history', { default: 'Show Ban History' })}
+            {$_('bans.settings.show_history')}
           </span>
           <small>
-            {$_('bans.settings.show_history_desc', { default: 'Include past/expired bans in the list.' })}
+            {$_('bans.settings.show_history_desc')}
           </small>
         </label>
         <div class="col-md-6 d-flex align-items-center">
@@ -110,7 +110,7 @@
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="showTotalBans">
           <span class="d-block">
-            {$_('bans.settings.show_total_bans', { default: 'Show Total Bans Count' })}
+            {$_('bans.settings.show_total_bans')}
           </span>
         </label>
         <div class="col-md-6 d-flex align-items-center">
@@ -120,12 +120,24 @@
         </div>
       </div>
 
+      <!-- Show Search -->
+      <div class="row mb-3">
+        <label class="col-md-6 col-form-label" for="showSearch">
+          <span class="d-block">
+            {$_('bans.settings.show_search')}
+          </span>
+        </label>
+        <div class="col-md-6 d-flex align-items-center">
+             <div class="form-check form-switch">
+                 <input class="form-check-input" type="checkbox" id="showSearch" bind:checked={config.showSearch}>
+             </div>
+        </div>
+      </div>
+
       <!-- View Layout -->
       <div class="row mb-3">
         <label class="col-md-6 col-form-label" for="viewLayout1">
-          {$_('bans.settings.view_layout', {
-            default: 'View Layout',
-          })}
+          {$_('bans.settings.view_layout')}
         </label>
         <div class="col-md-6">
           <div class="btn-group w-100" role="group">
@@ -137,9 +149,7 @@
               value="LIST"
               bind:group={config.viewLayout} />
             <label class="btn btn-outline-primary" for="viewLayout1">
-              {$_('bans.settings.view_layout_list', {
-                default: 'List',
-              })}
+              {$_('bans.settings.view_layout_list')}
             </label>
 
             <input
@@ -150,9 +160,7 @@
               value="GRID"
               bind:group={config.viewLayout} />
             <label class="btn btn-outline-primary" for="viewLayout2">
-              {$_('bans.settings.view_layout_grid', {
-                default: 'Grid',
-              })}
+              {$_('bans.settings.view_layout_grid')}
             </label>
           </div>
         </div>
@@ -160,7 +168,7 @@
 
       <!-- Pagination Size -->
       <div class="row mb-3">
-           <label class="col-md-6 col-form-label" for="paginationSize">{$_('bans.settings.pagination_size', {default: 'Items per page'})}</label>
+           <label class="col-md-6 col-form-label" for="paginationSize">{$_('bans.settings.pagination_size')}</label>
            <div class="col-md-6">
                <input type="number" class="form-control" id="paginationSize" bind:value={config.paginationSize} min="1" max="100">
            </div>
@@ -171,7 +179,7 @@
           {#if saving}
             <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
           {/if}
-          {$_('save', { default: 'Save' })}
+          {$_('save')}
         </button>
       </div>
     </div>
@@ -195,6 +203,7 @@
         showExpiry: true,
         showHistory: false,
         showTotalBans: true,
+        showSearch: true,
         viewLayout: 'LIST',
         paginationSize: 20
     };

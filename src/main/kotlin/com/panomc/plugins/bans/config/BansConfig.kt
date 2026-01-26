@@ -11,6 +11,7 @@ class BansConfig(
     var showExpiry: Boolean = true,
     var showHistory: Boolean = false,
     var showTotalBans: Boolean = true,
+    var showSearch: Boolean = true,
     var viewLayout: ViewLayout = ViewLayout.LIST,
     var paginationSize: Int = 20,
     version: Int = 1

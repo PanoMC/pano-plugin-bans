@@ -8,6 +8,8 @@
   "bans": {
     "title": "Yasaklamalar",
     "empty": "Aktif yasaklama bulunamadı.",
+    "search_placeholder": "Kullanıcı adı veya sebeple ara...",
+    "no_results": "Aramanız için sonuç bulunamadı.",
     "reason": "Sebep",
     "banned_by": "Yasaklayan",
     "banned_on": "Yasaklanma Tarihi",
@@ -21,6 +23,7 @@
       "show_banned_by": "Yasaklayanı Göster",
       "show_duration": "Süreyi Göster",
       "show_expiry": "Bitiş Tarihini Göster",
+      "show_search": "Arama Kutusunu Göster",
       "pagination_size": "Sayfa Başına Öğe",
       "saved": "Ayarlar başarıyla kaydedildi.",
       "failed": "Ayarlar kaydedilemedi."
