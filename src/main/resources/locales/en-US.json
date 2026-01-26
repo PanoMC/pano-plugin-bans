@@ -25,6 +25,12 @@
       "show_duration": "Show Duration",
       "show_expiry": "Show Expiry Date",
       "show_search": "Show Search Box",
+      "show_history": "Show History",
+      "show_history_desc": "Display past bans for players as well.",
+      "show_total_bans": "Show Total Ban Count",
+      "view_layout": "View Layout",
+      "view_layout_list": "List",
+      "view_layout_grid": "Grid",
       "pagination_size": "Items per page",
       "saved": "Settings saved successfully.",
       "failed": "Failed to save settings."

@@ -25,6 +25,12 @@
       "show_duration": "Süreyi Göster",
       "show_expiry": "Bitiş Tarihini Göster",
       "show_search": "Arama Kutusunu Göster",
+      "show_history": "Geçmişi Göster",
+      "show_history_desc": "Oyuncuların geçmiş yasaklamalarını da gösterir.",
+      "show_total_bans": "Toplam Yasaklanma Sayısını Göster",
+      "view_layout": "Görünüm Düzeni",
+      "view_layout_list": "Liste",
+      "view_layout_grid": "Izgara",
       "pagination_size": "Sayfa Başına Öğe",
       "saved": "Ayarlar başarıyla kaydedildi.",
       "failed": "Ayarlar kaydedilemedi."
