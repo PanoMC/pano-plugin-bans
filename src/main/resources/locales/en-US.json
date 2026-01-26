@@ -1,3 +1,31 @@
 {
-  "hello-world": "Hello world!"
+  "permissions": {
+    "ManageBansPermission": {
+      "title": "Manage Bans Settings",
+      "description": "Allows changing the configuration for the bans page."
+    }
+  },
+  "bans": {
+    "title": "Bans",
+    "empty": "No active bans found.",
+    "reason": "Reason",
+    "banned_by": "Banned by",
+    "banned_on": "Banned on",
+    "expires": "Expires",
+    "permanent": "Permanent",
+    "settings": {
+      "title": "Bans Settings",
+      "show_avatars": "Show Avatars",
+      "avatar_size": "Avatar Size",
+      "show_reason": "Show Reason",
+      "show_banned_by": "Show Banned By",
+      "show_duration": "Show Duration",
+      "show_expiry": "Show Expiry Date",
+      "pagination_size": "Items per page",
+      "saved": "Settings saved successfully.",
+      "failed": "Failed to save settings."
+    }
+  },
+  "saving": "Saving...",
+  "save": "Save"
 }
