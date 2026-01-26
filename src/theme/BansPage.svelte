@@ -38,7 +38,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { goto, page } from '@panomc/sdk/svelte';
   import { _ } from '../main';
-  import { Pagination, Date as PanoDate, PlayerHead } from '@panomc/sdk/components';
+  import { Pagination, Date as PanoDate, PlayerHead } from '@panomc/sdk/components/theme';
 
   export let data;
   const { bans, config, pagination } = data;
