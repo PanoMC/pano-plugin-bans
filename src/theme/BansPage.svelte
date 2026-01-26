@@ -1,40 +1,41 @@
 <div class="container mt-4">
-  <div class="row align-items-center mb-4">
-    <div class="col">
-      <h2 class="mb-0">
-        {$_('bans.title')}
-        {#if config.showTotalBans && pagination.total > 0}
-          <small class="text-muted ms-2">({pagination.total})</small>
-        {/if}
-      </h2>
-    </div>
-    {#if config.showSearch}
-      <div class="col-md-4">
-        <div class="input-group">
-          <span class="input-group-text bg-transparent border-end-0">
+  <PageTitle>
+    <span slot="title">
+      {$_('bans.title')}
+      {#if config.showTotalBans && pagination.total > 0}
+        <small class="text-muted ms-2 opacity-50">({pagination.total})</small>
+      {/if}
+    </span>
+  </PageTitle>
+
+  {#if config.showSearch}
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8 col-lg-6">
+        <div class="position-relative">
+          <div class="position-absolute top-50 start-0 translate-middle-y ms-3 z-3">
             {#if isSearching}
-              <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+              <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
             {:else}
-              <i class="bi bi-search"></i>
+              <i class="bi bi-search text-muted opacity-75"></i>
             {/if}
-          </span>
+          </div>
           <input
             type="text"
-            class="form-control border-start-0"
+            class="form-control form-control-lg ps-5 shadow-sm border-0 bg-body"
+            style="border-radius: 12px;"
             placeholder={$_('bans.search_placeholder')}
             bind:value={searchInput}
             on:input={handleSearch} />
         </div>
       </div>
-    {/if}
-  </div>
+    </div>
+  {/if}
 
   {#if bans.length === 0}
-    <div class="alert alert-info">
-      {searchInput
+    <NoContent
+      text={searchInput
         ? $_('bans.no_results')
-        : $_('bans.empty')}
-    </div>
+        : $_('bans.empty')} />
   {:else}
     <div class:row={config.viewLayout === 'GRID'} class:list-group={config.viewLayout === 'LIST'}>
       {#each bans as ban}
@@ -209,7 +210,7 @@
   import { onMount } from 'svelte';
   import { goto, page } from '@panomc/sdk/svelte';
   import { _ } from '../main';
-  import { Pagination, Date as PanoDate, PlayerHead } from '@panomc/sdk/components/theme';
+  import { Pagination, Date as PanoDate, PlayerHead, NoContent, PageTitle } from '@panomc/sdk/components/theme';
 
   export let data;
   const { bans, config, pagination, search } = data;
