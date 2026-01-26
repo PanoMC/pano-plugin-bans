@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "ManageBansPermission": {
+    "MANAGE_BANS": {
       "title": "Manage Bans Settings",
       "description": "Allows changing the configuration for the bans page."
     }

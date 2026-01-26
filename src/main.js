@@ -33,7 +33,7 @@ export default class BansPlugin extends PanoPlugin {
       pano.ui.hook.register({
         name: 'panel:plugin-detail:content',
         component: viewComponent(() => import('./panel/BansSettings.svelte')),
-        permission: 'pano.plugin.bans.manage', // Assuming generic permission or consistent with defined permission
+        permission: `pano.plugin.${pluginId}.manage.bans`,
       });
     } else {
       pano.ui.page.register({

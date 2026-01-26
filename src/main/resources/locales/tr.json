@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "ManageBansPermission": {
+    "MANAGE_BANS": {
       "title": "Yasaklama Ayarlarını Yönet",
       "description": "Yasaklama sayfasının ayarlarını değiştirmeye izin verir."
     }
