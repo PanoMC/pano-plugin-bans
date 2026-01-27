@@ -2,7 +2,7 @@
   <PageTitle>
     <span slot="title">
       {#if config.showTotalBans && pagination.total > 0}
-        {$_('bans.count_title', { values: {count: pagination.total }})}
+        {$_('bans.count_title', { values: { count: pagination.total } })}
       {:else}
         {$_('bans.title')}
       {/if}
@@ -18,7 +18,7 @@
           {#if isSearching}
             <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
           {:else}
-            <i class="bi bi-search"></i>
+            <i class="fa-solid fa-magnifying-glass"></i>
           {/if}
         </div>
         <input
@@ -72,11 +72,11 @@
 
                 <p class="mb-0">
                   {#if config.showDuration && ban.banDate}
-                    <i class="bi bi-clock"></i>
+                    <i class="fa-regular fa-clock"></i>
                     {$_('bans.banned_on')}: <PanoDate time={ban.banDate} /><br />
                   {/if}
                   {#if config.showExpiry}
-                    <i class="bi bi-calendar-x"></i>
+                    <i class="fa-regular fa-calendar-xmark"></i>
                     {$_('bans.expires')}:
                     {#if ban.bannedUntil}
                       <PanoDate time={ban.bannedUntil} />
@@ -126,13 +126,13 @@
               <small class="text-gray">
                 {#if config.showDuration && ban.banDate}
                   <span class="me-3">
-                    <i class="bi bi-clock"></i>
+                    <i class="fa-regular fa-clock"></i>
                     {$_('bans.banned_on')}: <PanoDate time={ban.banDate} />
                   </span>
                 {/if}
                 {#if config.showExpiry}
                   <span>
-                    <i class="bi bi-calendar-x"></i>
+                    <i class="fa-regular fa-calendar-xmark"></i>
                     {$_('bans.expires')}:
                     {#if ban.bannedUntil}
                       <PanoDate time={ban.bannedUntil} />
@@ -158,7 +158,7 @@
 </div>
 
 <script context="module">
-  import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
+  import ApiUtil, { buildQueryParams } from '@panomc/sdk/utils/api';
 
   export async function load(event) {
     const {
@@ -209,10 +209,11 @@
   } from '@panomc/sdk/components/theme';
 
   export let data;
-  const { bans, config, pagination, search } = data;
+  $: ({ bans, config, pagination, search } = data);
 
   let searchInput = search;
   let searchTimeout;
+  $: searchInput = search;
   let isSearching = false;
 
   $: if (data) {
@@ -226,7 +227,7 @@
       const url = new URL($page.url);
       url.searchParams.set('search', searchInput);
       url.searchParams.set('page', '1');
-      goto(url.toString(), { keepFocus: true });
+      goto(url.toString(), { keepFocus: true, noscroll: true });
     }, 500);
   }
 

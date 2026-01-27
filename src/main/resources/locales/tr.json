@@ -8,7 +8,7 @@
   "bans": {
     "title": "Yasaklamalar",
     "count_title": "{count} Yasaklı",
-    "empty": "Aktif yasaklama bulunamadı.",
+    "empty": "Yasaklama yok.",
     "search_placeholder": "Kullanıcı adı veya sebeple ara...",
     "no_results": "Aramanız için sonuç bulunamadı.",
     "reason": "Sebep",
