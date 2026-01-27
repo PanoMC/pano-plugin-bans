@@ -9,7 +9,7 @@
     "title": "Yasaklamalar",
     "count_title": "{count} Yasaklı",
     "empty": "Yasaklama yok.",
-    "search_placeholder": "Kullanıcı adı veya sebeple ara...",
+    "search_placeholder": "Yasaklama ara...",
     "no_results": "Aramanız için sonuç bulunamadı.",
     "reason": "Sebep",
     "banned_by": "Yasaklayan",

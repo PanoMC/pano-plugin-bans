@@ -9,7 +9,7 @@
     "title": "Bans",
     "count_title": "{count} Banned",
     "empty": "No bans.",
-    "search_placeholder": "Search by username or reason...",
+    "search_placeholder": "Search ban...",
     "no_results": "No results found for your search.",
     "reason": "Reason",
     "banned_by": "Banned by",
