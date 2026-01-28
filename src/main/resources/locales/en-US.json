@@ -17,7 +17,7 @@
     "expires": "Expires",
     "permanent": "Permanent",
     "settings": {
-      "title": "Bans Settings",
+      "title": "Preferences",
       "show_avatars": "Show Avatars",
       "avatar_size": "Avatar Size",
       "show_reason": "Show Reason",
