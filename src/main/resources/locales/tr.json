@@ -17,7 +17,7 @@
     "expires": "Bitiş Tarihi",
     "permanent": "Kalıcı",
     "settings": {
-      "title": "Tercihler",
+      "title": "Yasaklama Ayarları",
       "show_avatars": "Avatarları Göster",
       "avatar_size": "Avatar Boyutu",
       "show_reason": "Sebebi Göster",
