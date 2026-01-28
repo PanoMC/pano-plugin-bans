@@ -1,7 +1,7 @@
-import {PanoPlugin} from '@panomc/sdk';
-import {derived} from 'svelte/store';
-import {_ as i18n} from '@panomc/sdk/utils/language';
-import {viewComponent} from '@panomc/sdk/utils/component';
+import { PanoPlugin } from '@panomc/sdk';
+import { derived } from 'svelte/store';
+import { _ as i18n } from '@panomc/sdk/utils/language';
+import { viewComponent } from '@panomc/sdk/utils/component';
 import ApiUtil from '@panomc/sdk/utils/api';
 
 const pluginId = 'pano-plugin-bans';
@@ -17,7 +17,7 @@ export default class BansPlugin extends PanoPlugin {
 
     if (pano.isPanel) {
       pano.ui.addon.onLoad(async (data, event) => {
-        if (data.addon.id !== 'pano-plugin-bans') return;
+        if (data.addon.id !== pluginId) return;
 
         try {
           const res = await ApiUtil.get({
@@ -31,7 +31,7 @@ export default class BansPlugin extends PanoPlugin {
       });
 
       pano.ui.hook.register({
-        name: 'panel:plugin-detail:content',
+        name: `panel:plugin-detail:content:${pluginId}`,
         component: viewComponent(() => import('./panel/BansSettings.svelte')),
         permission: `pano.plugin.${pluginId}.manage.bans`,
       });

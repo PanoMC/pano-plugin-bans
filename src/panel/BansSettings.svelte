@@ -1,9 +1,52 @@
+<script>
+  import ApiUtil from '@panomc/sdk/utils/api';
+  import {_} from '../main';
+  import {showToast} from '@panomc/sdk/toasts';
+
+  export let addon;
+
+  let config = addon?.config || {
+    avatarSize: 'PX_64',
+    showAvatars: true,
+    showReason: true,
+    showBannedBy: true,
+    showDuration: true,
+    showExpiry: true,
+    showHistory: false,
+    showTotalBans: true,
+    showSearch: true,
+    viewLayout: 'LIST',
+    paginationSize: 20
+  };
+
+  let saving = false;
+  let initialConfig = JSON.parse(JSON.stringify(config));
+
+  $: hasChanges = JSON.stringify(config) !== JSON.stringify(initialConfig);
+
+  async function save() {
+    if (saving) return;
+    saving = true;
+    try {
+      await ApiUtil.post({ path: '/api/panel/bans/config', body: config });
+      if (addon) addon.config = config;
+      initialConfig = JSON.parse(JSON.stringify(config));
+      showToast($_('bans.settings.saved'));
+    } catch (e) {
+      showToast($_('bans.settings.failed'));
+      console.error(e);
+    } finally {
+      saving = false;
+    }
+  }
+</script>
+
 {#if addon?.id === 'pano-plugin-bans'}
   <div class="card">
     <div class="card-header">
       {$_('bans.settings.title')}
     </div>
-    <div class="card-body animate__animated animate__fadeIn">
+    <div class="card-body">
       
       <!-- Show Avatars -->
       <div class="row mb-3">
@@ -186,61 +229,3 @@
   </div>
 {/if}
 
-<script>
-  import {onMount} from 'svelte';
-  import ApiUtil from '@panomc/sdk/utils/api';
-  import {_} from '../main';
-  import {showToast} from '@panomc/sdk/toasts';
-
-  export let addon;
-
-    let config = addon?.config || {
-        avatarSize: 'PX_64',
-        showAvatars: true,
-        showReason: true,
-        showBannedBy: true,
-        showDuration: true,
-        showExpiry: true,
-        showHistory: false,
-        showTotalBans: true,
-        showSearch: true,
-        viewLayout: 'LIST',
-        paginationSize: 20
-    };
-    
-    // If addon.config is missing (e.g. not loaded yet), try to fetch it
-    onMount(async () => {
-        if (!addon?.config) {
-             try {
-                const res = await ApiUtil.get({ path: '/api/panel/bans/config' });
-                if (res.config) {
-                    config = res.config;
-                    initialConfig = JSON.parse(JSON.stringify(config));
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        }
-    });
-
-    let saving = false;
-    let initialConfig = JSON.parse(JSON.stringify(config));
-
-    $: hasChanges = JSON.stringify(config) !== JSON.stringify(initialConfig);
-
-    async function save() {
-        if (saving) return;
-        saving = true;
-        try {
-            await ApiUtil.post({ path: '/api/panel/bans/config', body: config });
-            if (addon) addon.config = config;
-            initialConfig = JSON.parse(JSON.stringify(config));
-            showToast($_('bans.settings.saved'));
-        } catch (e) {
-            showToast($_('bans.settings.failed'));
-            console.error(e);
-        } finally {
-            saving = false;
-        }
-    }
-</script>
