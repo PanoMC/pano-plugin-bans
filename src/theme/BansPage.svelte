@@ -40,7 +40,7 @@
           <div class="col-md-6 col-lg-4 mb-3">
             <a
               href={`/player/${ban.username}`}
-              class="card h-100 text-decoration-none text-body transition-transform">
+              class="card h-100 text-decoration-none">
               <div class="card-body text-center">
                 {#if config.showAvatars}
                   <div class="mb-3">
@@ -65,19 +65,28 @@
 
                 {#if config.showReason}
                   <p class="card-text">
-                    <span class="badge bg-danger"
-                      >{$_('bans.reason')}: {ban.banMessage || 'N/A'}</span>
+                    <span
+                      class="badge text-bg-danger text-truncate"
+                      style="max-width: 250px; vertical-align: middle;"
+                      use:tooltip={[$_('bans.reason') + ': ' + (ban.banMessage || 'N/A')]}
+                      >{$_('bans.reason')}: {ban.banMessage || 'N/A'}</span
+                    >
                   </p>
                 {/if}
 
                 <p class="mb-0">
                   {#if config.showDuration && ban.banDate}
-                    <i class="fa-regular fa-clock"></i>
-                    {$_('bans.banned_on')}: <PanoDate time={ban.banDate} /><br />
+                    <i
+                      class="fa-regular fa-clock me-1"
+                      use:tooltip={[$_('bans.banned_on')]}
+                      aria-label={$_('bans.banned_on')}></i>
+                    <PanoDate time={ban.banDate} /><br />
                   {/if}
                   {#if config.showExpiry}
-                    <i class="fa-regular fa-calendar-xmark"></i>
-                    {$_('bans.expires')}:
+                    <i
+                      class="fa-regular fa-calendar-xmark me-1"
+                      use:tooltip={[$_('bans.expires')]}
+                      aria-label={$_('bans.expires')}></i>
                     {#if ban.bannedUntil}
                       <PanoDate time={ban.bannedUntil} />
                     {:else}
@@ -91,7 +100,7 @@
         {:else}
           <a
             href={`/player/${ban.username}`}
-            class="list-group-item list-group-item-action d-flex align-items-center text-decoration-none text-body">
+            class="list-group-item list-group-item-action d-flex align-items-center">
             {#if config.showAvatars}
               <div class="me-3">
                 <PlayerHead
@@ -118,22 +127,31 @@
 
               <div class="mb-2">
                 {#if config.showReason}
-                  <span class="badge text-bg-danger focus-ring me-2"
-                    >{$_('bans.reason')}: {ban.banMessage || 'N/A'}</span>
+                  <span
+                    class="badge text-bg-danger text-truncate focus-ring me-2"
+                    style="max-width: 250px; vertical-align: middle;"
+                    use:tooltip={[$_('bans.reason') + ': ' + (ban.banMessage || 'N/A')]}
+                    >{$_('bans.reason')}: {ban.banMessage || 'N/A'}</span
+                  >
                 {/if}
               </div>
 
-              <small class="text-gray">
+              <small>
                 {#if config.showDuration && ban.banDate}
                   <span class="me-3">
-                    <i class="fa-regular fa-clock"></i>
-                    {$_('bans.banned_on')}: <PanoDate time={ban.banDate} />
+                    <i
+                      class="fa-regular fa-clock me-1"
+                      use:tooltip={[$_('bans.banned_on')]}
+                      aria-label={$_('bans.banned_on')}></i>
+                    <PanoDate time={ban.banDate} />
                   </span>
                 {/if}
                 {#if config.showExpiry}
                   <span>
-                    <i class="fa-regular fa-calendar-xmark"></i>
-                    {$_('bans.expires')}:
+                    <i
+                      class="fa-regular fa-calendar-xmark me-1"
+                      use:tooltip={[$_('bans.expires')]}
+                      aria-label={$_('bans.expires')}></i>
                     {#if ban.bannedUntil}
                       <PanoDate time={ban.bannedUntil} />
                     {:else}
@@ -207,6 +225,7 @@
     NoContent,
     PageTitle,
   } from '@panomc/sdk/components/theme';
+  import tooltip from '@panomc/sdk/utils/tooltip';
 
   export let data;
   $: ({ bans, config, pagination, search } = data);
