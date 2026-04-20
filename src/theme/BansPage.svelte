@@ -1,14 +1,4 @@
 <div class="container vstack gap-3">
-  <PageTitle>
-    <span slot="title">
-      {#if config.showTotalBans && pagination.total > 0}
-        {$_('bans.count_title', { values: { count: pagination.total } })}
-      {:else}
-        {$_('bans.title')}
-      {/if}
-    </span>
-  </PageTitle>
-
   {#if config.showSearch}
     <div class="d-flex justify-content-center">
       <div class="position-relative">
@@ -176,7 +166,7 @@
 </div>
 
 <script context="module">
-  import ApiUtil, { buildQueryParams } from '@panomc/sdk/utils/api';
+  import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
 
   export async function load(event) {
     const {
@@ -199,6 +189,13 @@
           pagination: res.pagination,
           search,
         },
+        pageTitle:
+          res.config?.showTotalBans && res.pagination?.total > 0
+            ? {
+                title: 'plugins.pano-plugin-bans.bans.count_title',
+                titleValues: { count: res.pagination.total },
+              }
+            : 'plugins.pano-plugin-bans.bans.title',
       };
     } catch (e) {
       console.error(e);
@@ -209,6 +206,7 @@
           pagination: { current: 1, last: 1, total: 0, perPage: 20 },
           search: '',
         },
+        pageTitle: 'plugins.pano-plugin-bans.bans.title',
       };
     }
   }
@@ -223,7 +221,6 @@
     Date as PanoDate,
     PlayerHead,
     NoContent,
-    PageTitle,
   } from '@panomc/sdk/components/theme';
   import tooltip from '@panomc/sdk/utils/tooltip';
 
