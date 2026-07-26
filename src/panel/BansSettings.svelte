@@ -1,7 +1,6 @@
 <script>
   import ApiUtil from '@panomc/sdk/utils/api';
-  import {_} from '../main';
-  import {showToast} from '@panomc/sdk/toasts';
+  import { _, showSuccessToast, showErrorToast } from '../main';
 
   export let addon;
 
@@ -31,9 +30,9 @@
       await ApiUtil.post({ path: '/api/panel/bans/config', body: config });
       if (addon) addon.config = config;
       initialConfig = JSON.parse(JSON.stringify(config));
-      showToast($_('bans.settings.saved'));
+      showSuccessToast($_('bans.settings.saved'));
     } catch (e) {
-      showToast($_('bans.settings.failed'));
+      showErrorToast($_('bans.settings.failed'));
       console.error(e);
     } finally {
       saving = false;
