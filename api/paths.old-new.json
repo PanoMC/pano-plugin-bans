@@ -1,0 +1,26 @@
+[
+  {
+    "method": "GET",
+    "old": "/api/bans",
+    "new": "/api/plugins/pano-plugin-bans/bans",
+    "relative": "/plugins/pano-plugin-bans/bans",
+    "class": "GetBansAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/bans/routes/api/GetBansAPI.kt"
+  },
+  {
+    "method": "GET",
+    "old": "/api/panel/bans/config",
+    "new": "/api/plugins/pano-plugin-bans/panel/bans/config",
+    "relative": "/plugins/pano-plugin-bans/panel/bans/config",
+    "class": "PanelGetConfigAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/bans/routes/panel/PanelGetConfigAPI.kt"
+  },
+  {
+    "method": "POST",
+    "old": "/api/panel/bans/config",
+    "new": "/api/plugins/pano-plugin-bans/panel/bans/config",
+    "relative": "/plugins/pano-plugin-bans/panel/bans/config",
+    "class": "PanelUpdateConfigAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/bans/routes/panel/PanelUpdateConfigAPI.kt"
+  }
+]

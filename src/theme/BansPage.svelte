@@ -1,4 +1,4 @@
-<div class="container vstack gap-3">
+<div class="bans-bans-page container vstack gap-3">
   {#if config.showSearch}
     <div class="d-flex justify-content-center">
       <div class="position-relative">
@@ -13,7 +13,7 @@
         </div>
         <input
           type="text"
-          class="form-control rounded-pill ps-5"
+          class="bans-bans-page__input form-control rounded-pill ps-5"
           style="width: 300px;"
           placeholder={$_('bans.search_placeholder')}
           bind:value={searchInput}
@@ -24,14 +24,14 @@
   {#if bans.length === 0}
     <NoContent text={searchInput ? $_('bans.no_results') : $_('bans.empty')} />
   {:else}
-    <div class:row={config.viewLayout === 'GRID'} class:list-group={config.viewLayout === 'LIST'}>
+    <div class="bans-bans-page__list" class:row={isGrid} class:list-group={isList}>
       {#each bans as ban}
         {#if config.viewLayout === 'GRID'}
           <div class="col-md-6 col-lg-4 mb-3">
             <a
               href={`/player/${ban.username}`}
               class="card h-100 text-decoration-none">
-              <div class="card-body text-center">
+              <div class="bans-bans-page__body card-body text-center">
                 {#if config.showAvatars}
                   <div class="mb-3">
                     <PlayerHead
@@ -49,14 +49,14 @@
                       {checkTime} />
                   </div>
                 {/if}
-                <h5 class="card-title">
+                <h5 class="bans-bans-page__title card-title">
                   {ban.username}
                 </h5>
 
                 {#if config.showReason}
                   <p class="card-text">
                     <span
-                      class="badge text-bg-danger text-truncate"
+                      class="bans-bans-page__badge badge text-bg-danger text-truncate"
                       style="max-width: 250px; vertical-align: middle;"
                       use:tooltip={[$_('bans.reason') + ': ' + (ban.banMessage || 'N/A')]}
                       >{$_('bans.reason')}: {ban.banMessage || 'N/A'}</span
@@ -90,7 +90,7 @@
         {:else}
           <a
             href={`/player/${ban.username}`}
-            class="list-group-item list-group-item-action d-flex align-items-center">
+            class="bans-bans-page__item list-group-item list-group-item-action d-flex align-items-center">
             {#if config.showAvatars}
               <div class="me-3">
                 <PlayerHead
@@ -118,7 +118,7 @@
               <div class="mb-2">
                 {#if config.showReason}
                   <span
-                    class="badge text-bg-danger text-truncate focus-ring me-2"
+                    class="bans-bans-page__reason badge text-bg-danger text-truncate focus-ring me-2"
                     style="max-width: 250px; vertical-align: middle;"
                     use:tooltip={[$_('bans.reason') + ': ' + (ban.banMessage || 'N/A')]}
                     >{$_('bans.reason')}: {ban.banMessage || 'N/A'}</span
@@ -166,7 +166,9 @@
 </div>
 
 <script context="module">
-  import ApiUtil, {buildQueryParams} from '@panomc/sdk/utils/api';
+  export const view = { path: '/bans' };
+  import { buildQueryParams } from '@panomc/sdk/utils/api';
+  import { api } from '@panomc/sdk/plugin-api';
 
   export async function load(event) {
     const {
@@ -177,23 +179,34 @@
 
     try {
       const queryParams = buildQueryParams({ page, search });
-      const res = await ApiUtil.get({
-        path: `/api/bans${queryParams}`,
+      const res = await api.get({
+        path: `/bans${queryParams}`,
         request: event,
       });
 
+      // The list answers { items, page }; an older core answered { bans, pagination } (read until CX-15).
+      const bans = res.items ?? res.bans ?? [];
+      const pagination = res.page
+        ? {
+            current: res.page.number,
+            last: res.page.totalPages,
+            total: res.page.totalItems,
+            perPage: res.page.size,
+          }
+        : res.pagination;
+
       return {
         data: {
-          bans: res.bans,
+          bans,
           config: res.config,
-          pagination: res.pagination,
+          pagination,
           search,
         },
         pageTitle:
-          res.config?.showTotalBans && res.pagination?.total > 0
+          res.config?.showTotalBans && pagination?.total > 0
             ? {
                 title: 'plugins.pano-plugin-bans.bans.count_title',
-                titleValues: { count: res.pagination.total },
+                titleValues: { count: pagination.total },
               }
             : 'plugins.pano-plugin-bans.bans.title',
       };
@@ -215,7 +228,8 @@
 <script>
   import { onMount } from 'svelte';
   import { goto, page } from '@panomc/sdk/svelte';
-  import { _ } from '../main';
+  import { derived } from 'svelte/store';
+  import { _ as i18n } from '@panomc/sdk/utils/language';
   import {
     Pagination,
     Date as PanoDate,
@@ -224,8 +238,13 @@
   } from '@panomc/sdk/components/theme';
   import tooltip from '@panomc/sdk/utils/tooltip';
 
+  // plugin translations: `$_('key')` reads `plugins.pano-plugin-bans.key`
+  const _ = derived(i18n, ($_fn) => (key, options) => $_fn(`plugins.pano-plugin-bans.${key}`, options));
+
   export let data;
   $: ({ bans, config, pagination, search } = data);
+  $: isGrid = config.viewLayout === 'GRID';
+  $: isList = config.viewLayout === 'LIST';
 
   let searchInput = search;
   let searchTimeout;

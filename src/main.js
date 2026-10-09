@@ -1,8 +1,8 @@
 import { PanoPlugin } from '@panomc/sdk';
 import { derived } from 'svelte/store';
-import { _ as i18n } from '@panomc/sdk/utils/language';
 import { viewComponent } from '@panomc/sdk/utils/component';
-import ApiUtil from '@panomc/sdk/utils/api';
+import { api } from '@panomc/sdk/plugin-api';
+import { _ as i18n } from '@panomc/sdk/utils/language';
 import { showToast } from '@panomc/sdk/toasts';
 
 const pluginId = 'pano-plugin-bans';
@@ -37,8 +37,8 @@ export default class BansPlugin extends PanoPlugin {
         if (data.addon.id !== pluginId) return;
 
         try {
-          const res = await ApiUtil.get({
-            path: '/api/panel/bans/config',
+          const res = await api.panel.get({
+            path: '/bans/config',
             request: event,
           });
           data.addon.config = res.config;
@@ -53,10 +53,7 @@ export default class BansPlugin extends PanoPlugin {
         permission: `pano.plugin.${pluginId}.manage.bans`,
       });
     } else {
-      pano.ui.page.register({
-        path: '/bans',
-        component: viewComponent(() => import('./theme/BansPage.svelte')),
-      });
+      // The page '/bans' is declared by `export const view` in src/theme/BansPage.svelte.
 
       pano.ui.nav.site.editNavLinks((navItems) => {
         if (!navItems.find((n) => n.href === '/bans')) {

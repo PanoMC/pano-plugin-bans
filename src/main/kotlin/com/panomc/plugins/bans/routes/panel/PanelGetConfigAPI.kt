@@ -9,14 +9,14 @@ import com.panomc.plugins.bans.config.BansConfig
 import com.panomc.plugins.bans.permission.ManageBansPermission
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
 
 @Endpoint
 class PanelGetConfigAPI(
     private val plugin: BansPlugin
 ) : PanelApi() {
-    override val paths = listOf(Path("/api/panel/bans/config", RouteType.GET))
+    override val paths = listOf(Path("/bans/config", RouteType.GET))
 
     private val configManager by lazy {
         plugin.pluginBeanContext.getBean(PluginConfigManager::class.java) as PluginConfigManager<BansConfig>

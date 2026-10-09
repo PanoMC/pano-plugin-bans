@@ -12,8 +12,8 @@ import com.panomc.plugins.bans.permission.ManageBansPermission
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.Bodies.json
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.Bodies.json
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
 import io.vertx.json.schema.common.dsl.Schemas.*
 
@@ -21,7 +21,7 @@ import io.vertx.json.schema.common.dsl.Schemas.*
 class PanelUpdateConfigAPI(
     private val plugin: BansPlugin
 ) : PanelApi() {
-    override val paths = listOf(Path("/api/panel/bans/config", RouteType.POST))
+    override val paths = listOf(Path("/bans/config", RouteType.POST))
 
     private val configManager by lazy {
         plugin.pluginBeanContext.getBean(PluginConfigManager::class.java) as PluginConfigManager<BansConfig>

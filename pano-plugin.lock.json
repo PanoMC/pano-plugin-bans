@@ -1,0 +1,26 @@
+{
+  "controllers": {},
+  "format": 1,
+  "views": {
+    "bans:BansPage": {
+      "classes": [
+        "bans-bans-page",
+        "bans-bans-page__badge",
+        "bans-bans-page__body",
+        "bans-bans-page__input",
+        "bans-bans-page__item",
+        "bans-bans-page__list",
+        "bans-bans-page__reason",
+        "bans-bans-page__title"
+      ],
+      "contract": 1,
+      "hooks": [],
+      "props": {
+        "data": {
+          "required": true
+        }
+      },
+      "slots": []
+    }
+  }
+}
