@@ -3,8 +3,8 @@ package com.panomc.plugins.bans.dao
 import com.panomc.platform.db.DBEntity
 import com.panomc.platform.db.DatabaseManager
 import com.panomc.platform.db.model.User
-import com.panomc.platform.util.BanUtil
 import com.panomc.plugins.bans.BansPlugin
+import com.panomc.plugins.bans.config.BansConfig
 import io.vertx.kotlin.coroutines.coAwait
 import io.vertx.sqlclient.Row
 import io.vertx.sqlclient.RowSet
@@ -17,7 +17,13 @@ class BansDao(private val bansPlugin: BansPlugin) {
         bansPlugin.applicationContext.getBean(DatabaseManager::class.java)
     }
 
-    suspend fun getBannedPlayers(page: Int, pageSize: Int, showHistory: Boolean, search: String? = null): List<Map<String, Any>> {
+    suspend fun getBannedPlayers(
+        page: Int,
+        pageSize: Int,
+        showHistory: Boolean,
+        search: String? = null,
+        config: BansConfig? = null
+    ): List<Map<String, Any?>> {
         val offset = (page - 1) * pageSize
         val prefix = databaseManager.getTablePrefix()
         
@@ -32,9 +38,9 @@ class BansDao(private val bansPlugin: BansPlugin) {
         }
 
         val query = if (showHistory) {
-            "SELECT u.*, h.reason as banMessage, h.bannedUntil, h.createdAt as banDate FROM `${prefix}ban_history` h LEFT JOIN `${prefix}user` u ON u.id = h.userId WHERE 1=1 $searchCondition ORDER BY h.createdAt DESC LIMIT ? OFFSET ?"
+            "SELECT u.id, u.username, u.banned, u.lastActivityTime, h.reason as banMessage, h.bannedUntil, h.createdAt as banDate FROM `${prefix}ban_history` h LEFT JOIN `${prefix}user` u ON u.id = h.userId WHERE 1=1 $searchCondition ORDER BY h.createdAt DESC LIMIT ? OFFSET ?"
         } else {
-            "SELECT u.*, (SELECT createdAt FROM `${prefix}ban_history` WHERE userId = u.id ORDER BY id DESC LIMIT 1) as banDate FROM `${prefix}user` u WHERE u.banned = 1 $searchCondition ORDER BY u.id DESC LIMIT ? OFFSET ?"
+            "SELECT u.id, u.username, u.banned, u.lastActivityTime, u.banMessage, u.bannedUntil, (SELECT createdAt FROM `${prefix}ban_history` WHERE userId = u.id ORDER BY id DESC LIMIT 1) as banDate FROM `${prefix}user` u WHERE u.banned = 1 $searchCondition ORDER BY u.id DESC LIMIT ? OFFSET ?"
         }
 
         val sqlClient = databaseManager.getSqlClient()
@@ -53,11 +59,29 @@ class BansDao(private val bansPlugin: BansPlugin) {
             .execute(Tuple.from(params))
             .coAwait()
 
+        // Only these public fields leave the server. The user table also holds the password hash, email, IPs and
+        // link codes, so never send whole rows here.
         return rows.map { row ->
-            val map = row.toJson().map
-            val user = row.toEntity()
-            
-            map["banned"] = BanUtil.isBanned(user)
+            val bannedUntil = row.getLong("bannedUntil")
+            val bannedFlag = when (val value = row.getValue("banned")) {
+                is Boolean -> value
+                is Number -> value.toInt() != 0
+                else -> false
+            }
+            val stillBanned = bannedFlag &&
+                (bannedUntil == null || System.currentTimeMillis() < bannedUntil)
+
+            val map = mutableMapOf<String, Any?>(
+                "id" to row.getLong("id"),
+                "username" to row.getString("username"),
+                "lastActivityTime" to row.getLong("lastActivityTime"),
+                "banned" to stillBanned
+            )
+
+            if (config == null || config.showReason) map["banMessage"] = row.getString("banMessage")
+            if (config == null || config.showDuration) map["banDate"] = row.getLong("banDate")
+            if (config == null || config.showExpiry) map["bannedUntil"] = bannedUntil
+
             map
         }
     }

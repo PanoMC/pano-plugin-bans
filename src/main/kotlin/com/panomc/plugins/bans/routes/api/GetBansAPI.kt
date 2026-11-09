@@ -65,7 +65,7 @@ class GetBansAPI(
 
         Paging.requireInRange(page, total)
 
-        val bans = bansDao.getBannedPlayers(page.number, page.size, config.showHistory, search)
+        val bans = bansDao.getBannedPlayers(page.number, page.size, config.showHistory, search, config)
 
         return Successful(Paging.response(bans, total, page, mapOf("config" to config)))
     }
