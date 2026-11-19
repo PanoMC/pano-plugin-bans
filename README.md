@@ -38,4 +38,4 @@ Show your community that the rules matter. Bans adds a clean, searchable list of
 Questions or ideas? Join our [Discord](https://panomc.com/discord) or visit [panomc.com](https://panomc.com).
 
 ## 📄 License
-Released under the GPL-3.0 License.
+Released under the MIT License.
