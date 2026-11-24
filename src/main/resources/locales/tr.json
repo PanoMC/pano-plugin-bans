@@ -7,11 +7,12 @@
   },
   "bans": {
     "title": "Yasaklamalar",
-    "count_title": "{count} Yasaklı",
+    "count_title": "{count} yasaklı oyuncu",
     "empty": "Yasaklama yok.",
     "search_placeholder": "Yasaklama ara...",
     "no_results": "Aramanız için sonuç bulunamadı.",
     "reason": "Sebep",
+    "no_reason": "Sebep belirtilmedi",
     "banned_by": "Yasaklayan",
     "banned_on": "Yasaklanma Tarihi",
     "expires": "Bitiş Tarihi",

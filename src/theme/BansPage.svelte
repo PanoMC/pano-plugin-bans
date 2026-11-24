@@ -58,8 +58,8 @@
                     <span
                       class="bans-bans-page__badge badge text-bg-danger text-truncate"
                       style="max-width: 250px; vertical-align: middle;"
-                      use:tooltip={[$_('bans.reason') + ': ' + (ban.banMessage || 'N/A')]}
-                      >{$_('bans.reason')}: {ban.banMessage || 'N/A'}</span
+                      use:tooltip={[$_('bans.reason') + ': ' + (ban.banMessage || $_('bans.no_reason'))]}
+                      >{$_('bans.reason')}: {ban.banMessage || $_('bans.no_reason')}</span
                     >
                   </p>
                 {/if}
@@ -120,8 +120,8 @@
                   <span
                     class="bans-bans-page__reason badge text-bg-danger text-truncate focus-ring me-2"
                     style="max-width: 250px; vertical-align: middle;"
-                    use:tooltip={[$_('bans.reason') + ': ' + (ban.banMessage || 'N/A')]}
-                    >{$_('bans.reason')}: {ban.banMessage || 'N/A'}</span
+                    use:tooltip={[$_('bans.reason') + ': ' + (ban.banMessage || $_('bans.no_reason'))]}
+                    >{$_('bans.reason')}: {ban.banMessage || $_('bans.no_reason')}</span
                   >
                 {/if}
               </div>

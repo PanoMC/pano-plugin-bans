@@ -7,11 +7,12 @@
   },
   "bans": {
     "title": "Bans",
-    "count_title": "{count} Banned",
+    "count_title": "{count, plural, one {# banned player} other {# banned players}}",
     "empty": "No bans.",
     "search_placeholder": "Search ban...",
     "no_results": "No results found for your search.",
     "reason": "Reason",
+    "no_reason": "No reason given",
     "banned_by": "Banned by",
     "banned_on": "Banned on",
     "expires": "Expires",
